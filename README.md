@@ -21,21 +21,21 @@
   <ol>
     <li>
       Clone this repository:
-      <pre><code>git clone &lt;repo-url&gt;</code></pre>
+      <pre><code>git clone https://github.com/ahmadalharbi21/Interactive-Light-Display</code></pre>
     </li>
     <li>
-      Install dependencies:
-      <pre><code>pip install bleak dxcam</code></pre>
+      Install dependencies using the requirements file:
+      <pre><code>pip install -r requirements.txt</code></pre>
     </li>
     <li>
-      Run the script:
-      <pre><code>python interactive_led.py</code></pre>
+      Run the main script:
+      <pre><code>python main.py</code></pre>
     </li>
   </ol>
   <hr />
   <h3>Example in Action</h3>
   <p>
-    <img src="Content\Example.gif" alt="Interactive Lighting Demo" />
+    <img src="Content/Example.gif" alt="Interactive Lighting Demo" />
   </p>
   <p><em>(This example demonstrates the functionality of the LED light system in real-time.)</em></p>
   <hr />
@@ -46,22 +46,34 @@ DELAY = 0.04  # Delay between frame captures (in seconds)
 RESIZE_SHAPE = [300, 250]  # Resolution for screen capture processing
 DEVICE_ADDRESS = "BE:16:F7:00:03:B9"  # Replace with your LED device's Bluetooth address
 CHARACTERISTIC_UUID = "0000fff3-0000-1000-8000-00805f9b34fb"  # Replace with your LED's UUID</code></pre>
-  <p><strong>Note:</strong> You need to find your specific <code>DEVICE_ADDRESS</code> and <code>CHARACTERISTIC_UUID</code> for the LED light. A custom BLE exploration tool has been built to help with this.</p>
-  <p>
-    <a href="&lt;insert-link-here&gt;" target="_blank">BLE Device Explorer Tool Repository</a>
-  </p>
+  <p><strong>Note:</strong> Every LED light is different in terms of the request structure. Experiment with your LED light to determine where to pass the RGB values. Modify this part of the code:</p>
+  <pre><code>color_bytes = bytearray(b"~\x07\x05\x03")
+color_bytes += bytes([r, g, b])
+color_bytes += bytearray(b"\x10\xefNR1713\x01")</code></pre>
+  <p>To identify the correct property, look for a characteristic without a response. Adjust the colors in the app and monitor the corresponding changes in the property value. This will help you figure out where to pass the RGB values.</p>
+  <hr />
+  <h3>Performance Optimization</h3>
+  <p>Adjust the following variables to achieve the best performance in terms of delay and speed:</p>
+  <ul>
+    <li><strong>FPS</strong>: Higher values increase screen capture speed but may overload the LED device.</li>
+    <li><strong>DELAY</strong>: Reduce delay to improve responsiveness.</li>
+    <li><strong>RESIZE_SHAPE</strong>: Lower resolution can speed up processing at the cost of accuracy.</li>
+  </ul>
+  <p>Each LED light has a limit on how many requests it can handle per second. If you exceed the buffer size, you might experience skipped colors or other unexpected behavior. For example, my LED light can handle requests in the range of 7-9 milliseconds, which corresponds to approximately 120 FPS.</p>
+  <hr />
+  <h3>Additional Tools</h3>
+  <p>To identify your specific <code>DEVICE_ADDRESS</code> and <code>CHARACTERISTIC_UUID</code>, you can use the BLE Device Scanner tool available here:</p>
+  <p><a href="https://github.com/ahmadalharbi21/BLE_DEVICE_SCANNER" target="_blank">BLE Device Scanner Repository</a></p>
   <hr />
   <h3>Acknowledgements</h3>
   <ul>
     <li>
       <strong>dxcam</strong>: Used for low-latency screen capturing. Learn more
-      <a href="https://github.com/SerpentAI/dxcam" target="_blank">here</a>.
+      <a href="https://github.com/ra1nty/DXcam" target="_blank">here</a>.
     </li>
     <li>
       <strong>Bleak</strong>: Lightweight and efficient library for Bluetooth communication. Learn more
       <a href="https://github.com/hbldh/bleak" target="_blank">here</a>.
     </li>
   </ul>
-  <hr />
-  <p>Enhance your entertainment setup with interactive lighting today! 🚀</p>
 </div>
