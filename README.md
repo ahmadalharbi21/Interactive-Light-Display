@@ -35,7 +35,7 @@
   <hr />
   <h3>Example in Action</h3>
   <p>
-    <img src="Example.gif" alt="Interactive Lighting Demo" />
+    <img src="Content\Example.gif" alt="Interactive Lighting Demo" />
   </p>
   <p><em>(This example demonstrates the functionality of the LED light system in real-time.)</em></p>
   <hr />
